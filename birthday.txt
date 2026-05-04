@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Envelope</title>
+    <style>
+        :root {
+            --bg-color: #fce4ec;
+            --env-main: #ff4081;
+            --env-shadow: #e91e63;
+            --letter-bg: white;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .wrapper {
+            position: relative;
+            cursor: pointer;
+            width: 300px;
+            height: 200px;
+            transition: transform 0.3s;
+        }
+
+        /* The Back of the envelope */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 220px;
+            background-color: var(--env-main);
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* The Flap */
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid var(--env-main);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+            z-index: 4; /* On top when closed */
+        }
+
+        /* Front Pocket (Triangles) */
+        .pocket {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid var(--env-shadow);
+            border-right: 150px solid var(--env-shadow);
+            border-bottom: 120px solid var(--env-shadow);
+            border-top: 100px solid transparent;
+            z-index: 3; /* Always in front of the letter until opened */
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* The Birthday Letter */
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 280px;
+            height: 220px;
+            background: var(--letter-bg);
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.5s ease, bottom 0.5s ease;
+            z-index: 2; /* Tucked inside the pocket */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .letter h2 { color: var(--env-main); margin: 5px 0; font-size: 1.1rem; }
+        .letter p { font-size: 0.8rem; color: #555; margin: 5px 0; }
+
+        /* OPEN STATE ANIMATIONS */
+        .wrapper.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1; /* Move behind everything */
+        }
+
+        .wrapper.open .letter {
+            bottom: 100px;
+            transform: scale(1.3);
+            z-index: 5; /* Pop to the very front */
+            transition-delay: 0.3s;
+        }
+
+        .instruction {
+            margin-top: 40px;
+            color: var(--env-shadow);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Update the wrapper's onclick and make sure instruction has id="txt" -->
+<div class="wrapper" onclick="this.classList.toggle('open'); document.getElementById('txt').innerHTML = this.classList.contains('open') ? 'I hope im getting paid for this' : 'OPEN THE ENVELOPE BIRTHDAY BOY'">
+    <div class="flap"></div>
+    <div class="envelope-wrapper">
+        <div class="letter">
+            <div style="font-size: 1.2rem;">🎂</div>
+            <h2>Happy Birthday!</h2>
+            <p>Dear Rei our baby boy,</p>
+            <p>Wishing you a day filled with love, Furina, and all your favorite things.</p>
+            <p>May this trip around the sun be worth your while. Hope all your birthday wishes come true (confess to your crush already).</p>
+            <p style="font-weight:bold; margin-top:10px;">Fel-Nine Dgs</p>
+        </div>
+        <div class="pocket"></div>
+    </div>
+</div>
+
+<div class="instruction" id="txt">OPEN THE ENVELOPE BIRTHDAY BOY</div>
+
+
+</body>
+</html>
